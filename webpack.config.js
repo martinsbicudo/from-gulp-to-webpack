@@ -1,4 +1,5 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const HtmlWebPackPlugin = require("html-webpack-plugin")
+  , views = require('./hoc/getViewNames')
 
 module.exports = {
   module: {
@@ -10,9 +11,11 @@ module.exports = {
     ]
   },
   plugins: [
-    new HtmlWebPackPlugin({
-      template: "src/index.html",
-      filename: "./index.html"
-    })
+    ...views.getNames(file =>
+      new HtmlWebPackPlugin({
+        template: `src/${file}`,
+        filename: `./${file}`
+      })
+    )
   ]
-};
+}
