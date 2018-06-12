@@ -11,11 +11,13 @@ module.exports = {
     ]
   },
   plugins: [
-    ...views.getNames(file =>
-      new HtmlWebPackPlugin({
-        template: `src/${file}`,
-        filename: `./${file}`
+    ...views.getNames(".html", "src/", (file, path) => {
+      const filename = `./${path.replace('src/', '')}`
+      
+      return new HtmlWebPackPlugin({
+        template: path,
+        filename: filename
       })
-    )
+    })
   ]
 }
