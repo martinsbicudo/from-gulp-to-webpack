@@ -13,18 +13,6 @@ module.exports = {
         use: [{ loader: "html-loader", options: { minimize: true } }]
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
-        use: [
-          'url-loader?limit=10000',
-          {
-            loader: 'image-webpack-loader',
-            options: {
-              disable: process.env.NODE_ENV === 'development'
-            }
-          }
-        ]
-      },
-      {
         test: /\.scss$/,
         use: [
           MiniCssExtractPlugin.loader,
@@ -36,6 +24,25 @@ module.exports = {
               data: "$env: " + process.env.NODE_ENV + ";",
               includePaths: ["node_modules"],
               sourceMap: true
+            }
+          }
+        ]
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader"
+        }
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        use: [
+          'url-loader?limit=10000',
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              disable: process.env.NODE_ENV === 'development'
             }
           }
         ]
